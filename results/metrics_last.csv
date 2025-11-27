@@ -1,0 +1,3 @@
+dataset,data_root,preprocess,epochs,batch,accuracy,n_test,time
+comofod,.\datasets\comofod,grayworld+median,5,32,0.5494,1560,20251104_054134
+comofod,.\datasets\comofod,none,5,32,0.5571,1560,20251104_044135

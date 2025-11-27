@@ -1,0 +1,8 @@
+              precision    recall  f1-score   support
+
+      forged       0.54      0.56      0.55       750
+    original       0.58      0.56      0.57       810
+
+    accuracy                           0.56      1560
+   macro avg       0.56      0.56      0.56      1560
+weighted avg       0.56      0.56      0.56      1560

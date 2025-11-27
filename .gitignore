@@ -1,0 +1,11 @@
+﻿__pycache__/
+*.pyc
+.venv/
+.env
+celeb-deepfakeforensics-master/
+comofod_small/
+data/
+datasets/
+*.zip
+*.rar
+*.tar.gz

@@ -1,0 +1,50 @@
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # CoMoFoD klasörünü "data" içine taşı (adı ne olursa olsun)
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> mkdir .\data\comofod_raw -Force | Out-Null
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> if (Test-Path .\comofod_small) { Move-Item .\comofod_small .\data\comofod_raw\comofod_small -Force }
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj>
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # Celeb-Deepfake klasörü zaten kökteyse sorun yok
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # (İstersen aynen bırakacağız: .\celeb-deepfakeforensics-master)
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # CoMoFoD: kaynak klasörü göster (adı sende comofod_small)
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> python scripts/prepare_comofod.py --src ".\data\comofod_raw\comofod_small" --out ".\datasets\comofod"
+[OK] Kopyalanan görsel: 10400
+[INFO] Çıktı: datasets\comofod\original  ve  datasets\comofod\forged
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj>
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # Celeb-DF: videolardan kare çıkar (2 fps yeterli)
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> python scripts/prepare_celebdf.py --src ".\celeb-deepfakeforensics-master" --out ".\datasets\celebdf_frames" --fps 2
+[OK] Kaydedilen kare: 125
+[INFO] Çıktı: datasets\celebdf_frames\real  ve  datasets\celebdf_frames\fake
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # CoMoFoD — sadece model
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> python scripts/train_classifier.py --data-root ".\datasets\comofod" --dataset-name comofod --preprocess none
+Downloading: "https://download.pytorch.org/models/resnet18-f37072fd.pth" to C:\Users\90530/.cache\torch\hub\checkpoints\resnet18-f37072fd.pth
+100%|██████████████████████████████████████████████████████████████████████████████| 44.7M/44.7M [00:03<00:00, 13.6MB/s]
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 1/8  val_acc=0.5192
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 2/8  val_acc=0.5192
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 3/8  val_acc=0.5256
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 4/8  val_acc=0.5423
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 5/8  val_acc=0.5410
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 6/8  val_acc=0.5205
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 7/8  val_acc=0.5167
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+Epoch 8/8  val_acc=0.5295
+[OK] Test accuracy: 0.5326923076923077
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj>
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> # CoMoFoD — ön-işleme + model
+PS C:\Users\90530\Desktop\Akademi\7. Dönem\Görüntü Adli Bilişimine Giriş - Introduction to Image Computer Forensics File\vize\AdliBilisimVize_SamedAlpArslan_220205012\proj> python scripts/train_classifier.py --data-root ".\datasets\comofod" --dataset-name comofod --preprocess grayworld+median
+C:\Users\90530\AppData\Local\Programs\Python\Python312\Lib\site-packages\torch\utils\data\dataloader.py:668: UserWarning: 'pin_memory' argument is set as true but no accelerator is found, then device pinned memory won't be used.
+  warnings.warn(warn_msg)
+
